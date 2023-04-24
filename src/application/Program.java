@@ -6,12 +6,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import db.DB;
-import db.DbException;
 
 public class Program {
 
 	public static void main(String[] args) {
 
+		getData();
+	}
+
+	public static void getData() {
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -26,12 +29,11 @@ public class Program {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 			DB.closeConnection();
 		}
-
 	}
 
 }
