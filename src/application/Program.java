@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import db.DB;
+import db.DbIntegrityException;
 
 public class Program {
 
@@ -12,8 +13,32 @@ public class Program {
 
 		//getData();
 		//insertData();
-		updateData();
+		//updateData();
+		deleteData();
 		
+	}
+
+	private static void deleteData() {
+		Connection conn = null;		
+		PreparedStatement st = null;
+
+		try {
+			conn = DB.getConnection();
+			st = conn.prepareStatement(
+					"DELETE from department "
+					+"WHERE Id = ?");
+			
+			st.setInt(1, 7);
+					
+			int rowsAffected = st.executeUpdate();
+			System.out.println("Done! Rows Affected: " + rowsAffected);
+
+		} catch (SQLException e) {
+			throw new DbIntegrityException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeConnection();
+		}		
 	}
 
 	public static void getData() {
